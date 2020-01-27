@@ -1,0 +1,91 @@
+all:
+  vars:
+    ansible_user: vagrant
+    heketi_admin_key: "11elfeinhundertundelf"
+    heketi_user_key: "!!einseinseins"
+  hosts:
+    node1:
+      ansible_host: 10.99.1.208
+      ip: 10.99.1.208
+      access_ip: 10.99.1.208
+      disk_volume_device_1: "/dev/sdb"
+    node2:
+      ansible_host: 10.99.1.232
+      ip: 10.99.1.232
+      access_ip: 10.99.1.232
+      disk_volume_device_1: "/dev/sdb"
+    node3:
+      ansible_host: 10.99.1.182
+      ip: 10.99.1.182
+      access_ip: 10.99.1.182
+      disk_volume_device_1: "/dev/sdb"
+    node4:
+      ansible_host: 10.99.1.184
+      ip: 10.99.1.184
+      access_ip: 10.99.1.184
+      disk_volume_device_1: "/dev/sdb"
+    node5:
+      ansible_host: 10.99.1.187
+      ip: 10.99.1.187
+      access_ip: 10.99.1.187
+      disk_volume_device_1: "/dev/sdb"
+    node6:
+      ansible_host: 10.99.1.180
+      ip: 10.99.1.180
+      access_ip: 10.99.1.180
+      disk_volume_device_1: "/dev/sdb"
+    node7:
+      ansible_host: 10.99.1.188
+      ip: 10.99.1.188
+      access_ip: 10.99.1.188
+      disk_volume_device_1: "/dev/sdb"
+    node8:
+      ansible_host: 10.99.1.249
+      ip: 10.99.1.249
+      access_ip: 10.99.1.249
+      disk_volume_device_1: "/dev/sdb"
+    node9:
+      ansible_host: 10.99.1.207
+      ip: 10.99.1.207
+      access_ip: 10.99.1.207
+      disk_volume_device_1: "/dev/sdb"
+    node10:
+      ansible_host: 10.99.1.192
+      ip: 10.99.1.192
+      access_ip: 10.99.1.192
+      disk_volume_device_1: "/dev/sdb"
+  children:
+    kube-master:
+      hosts:
+        node4:
+    kube-node:
+      hosts:
+        node4:
+        node5:
+        node3:
+    etcd:
+      hosts:
+        node4:
+        node5:
+        node3:
+    k8s-cluster:
+      children:
+        kube-master:
+        kube-node:
+    calico-rr:
+      hosts: {}
+    heketi-node:
+      vars:
+        disk_volume_device_1: "/dev/sdb"
+      hosts:
+        node4:
+        node5:
+        node3:
+    network-storage:
+      children:
+        gfs-cluster:
+    gfs-cluster:
+      hosts:
+        node4:
+        node5:
+        node3:
