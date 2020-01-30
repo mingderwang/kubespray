@@ -55,6 +55,11 @@
         }
       },
       "spec": {
+        "selector": {
+           "matchLabels": {
+              "glusterfs": "heketi-pod"
+            }
+        },
         "replicas": 1,
         "template": {
           "metadata": {
